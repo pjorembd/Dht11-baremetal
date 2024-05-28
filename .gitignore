@@ -1,0 +1,6 @@
+.settings
+Debug
+.DS_Store
+.cproject
+.project
+dht11_baremetal Debug.launch

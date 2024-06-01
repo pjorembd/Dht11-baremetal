@@ -1,33 +1,3 @@
-//#include <main.h>
-//#include <stdint.h>
-//
-//
-//
-//int main(void) {
-//
-//	enable_AHB1_bus();
-//	GPIO_ConfigTypeDef GPIO_ConfigStruct = { 0 };
-//	GPIO_ConfigStruct.Mode = GPIO_MODE_OUTPUT;
-//	GPIO_ConfigStruct.Type = GPIO_TYPE_OUTPUT_OD;
-//	gpio_config(&GPIO_ConfigStruct);
-//	uint32_t countflag;
-//
-//	while (1) {
-//		gpio_write_pin(GPIOC, 10, GPIO_PIN_HIGH_STATE);
-//		delayMs(1000);//1 segundo 1000ms /
-//		gpio_write_pin(GPIOC, 10, GPIO_PIN_LOW_STATE);
-//		//DHT11 RESET PULSE
-////		gpio_write_pin(GPIOC, 10, GPIO_PIN_HIGH_STATE);
-////		gpio_write_pin(GPIOC, 10, GPIO_PIN_LOW_STATE);
-//
-////		//input mode for pull up
-////		GPIO_ConfigStruct.Mode = GPIO_MODE_INPUT;
-////		GPIO_ConfigStruct.Pull = GPIO_PULL_PULL_UP;
-////		gpio_config(&GPIO_ConfigStruct);
-//	}
-//
-//}
-////////////////////////////////////////////////////// anterior ////////////////////////
 #include <main.h>
 #include <stdint.h>
 
@@ -44,29 +14,23 @@ uint16_t SUM;
 int main(void) {
 
 	enable_AHB1_bus();
-	GPIO_ConfigStruct.Mode = GPIO_MODE_OUTPUT;
-	GPIO_ConfigStruct.Type = GPIO_TYPE_OUTPUT_OD;
-	gpio_config(&GPIO_ConfigStruct);
 
 	while (1) {
-//		delayMs(1000);
-//		init_dht11();
-//		Rh_byte1 = read_dht11();
-//		hum1 = Rh_byte1;
-//		Rh_byte2 = read_dht11();
-//		hum2 = Rh_byte2;
-//		Temp_byte1 = read_dht11();
-//		temp1 = Temp_byte1;
-//		Temp_byte2 = read_dht11();
-//		temp2 = Temp_byte2;
-//		SUM = read_dht11();
-//
-//		if (SUM == (Rh_byte1 + Rh_byte2 + Temp_byte1 + Temp_byte2)) {
-//			//Correct
-//		}
-		gpio_write_pin(GPIOC, 10,1);
-		delayMs(4000);
-		gpio_write_pin(GPIOC, 10,0);
+		delayMs(1000);
+		init_dht11();
+		Rh_byte1 = read_dht11();
+		hum1 = Rh_byte1;
+		Rh_byte2 = read_dht11();
+		hum2 = Rh_byte2;
+		Temp_byte1 = read_dht11();
+		temp1 = Temp_byte1;
+		Temp_byte2 = read_dht11();
+		temp2 = Temp_byte2;
+		SUM = read_dht11();
+
+		if (SUM == (Rh_byte1 + Rh_byte2 + Temp_byte1 + Temp_byte2)) {
+			//Correct
+		}
 	}
 }
 
@@ -147,5 +111,4 @@ uint8_t read_dht11(void) {
 	return i;
 
 }
-
 

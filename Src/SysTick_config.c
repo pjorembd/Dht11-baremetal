@@ -33,13 +33,13 @@ void calculate_autorreload_value(int ms){
 	uint32_t reload_value = (SystemCoreClock / 1000) * ms ;
 	uint32_t max_value_systick_timer = 0xFFFFFF;
 	int i = 0;
-
 	/*
 	 * El delay requiere un reload value que cabe el registro
 	 */
 	if (reload_value < max_value_systick_timer) {
 		SysTick_init(reload_value);
-		while (get_systick_cntflg() == 0);
+		while (get_systick_cntflg() == 0); //when countflag is 0 means that reload value has been reached (4.5.1, bit 1-> TICKTIN from arm cortex m4 generic user guide)
+		return;
 	}
 
 	/*
@@ -66,20 +66,18 @@ void calculate_autorreload_value(int ms){
 	//relleno el reload value con el sobrante que faltaba
 	SysTick->STK_LOAD = decimal_part_repeat_times * max_value_systick_timer;
 	while (get_systick_cntflg() == 0);
+
 }
 
 void delayMs(int ms) {
 
-//	SysTick_init(ms);
-//	//when countflag is 0 means that reload value has been reached (4.5.1, bit 1-> TICKTIN from arm cortex m4 generic user guide)
-//	while (get_systick_cntflg() == 0);
 	calculate_autorreload_value(ms);
 
 }
 
 void delayUs(int us) {
-	int reload_value = (SystemCoreClock / 1000) * (us/1000);
-	SysTick_init(1000); //1ms = 1000us, simple math operation so I can get reload value using the same SysTick_init fucntion
+	double reload_value_us = (SystemCoreClock / 1000.0) * (us/1000.0); //1ms = 1000us, simple math operation so I can get reload value using the same SysTick_init fucntion
+	SysTick_init(reload_value_us);
 	while (get_systick_cntflg() == 0);
 
 }
